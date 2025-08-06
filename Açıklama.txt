@@ -10,6 +10,7 @@ Use-Cases:
 - Etkinlik Listeleme -> Öğrenci
 - Etkinliğe Kayıt Olma -> Öğrenci
 - Etkinlik Oluşturma -> Akademisyen - Kulüp Yöneticisi
+Eğer Akademisyen oluşturduysa etkinliği onaylama olmayacak
 - Etkinlik Onaylama -> Akademisyen
 - Kulüp Üyeleri Ekleme -> Kulüp Yöneticisi
 - Bildirim Gönderme -> Administrator - Akademisyen 
