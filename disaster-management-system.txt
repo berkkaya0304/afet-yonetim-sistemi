@@ -1,0 +1,35 @@
+
+------------------------------------ KULLANICILAR ------------------------------------
+1- Vatandaş
+2- AFAD Çalışanı
+3- Kurtarma Ekibi
+
+------------------------------------ USE CASE ------------------------------------
+1. Vatandaş Use Case
+Kullanıcı Olarak Kayıt ve Giriş
+Yardım Çağrısı Gönderme
+Konum Paylaşma
+Afet Bilgilendirme Görüntüleme
+Güvenli Alanları Görüntüleme
+Bildirim Alma
+Kendi Yardım Taleplerini Takip Etme
+
+2. Admin/AFAD Personeli Use Case
+Kullanıcıları Görüntüleme ve Yönetme
+Yardım taleplerini  Görüntüleme
+Ekip Atama
+Afet Alanlarını Haritada İşaretleme
+Bildirim Yayınlama
+Görev Durumunu Takip Etme
+Raporlama ve İstatistik Görüntüleme
+
+3. Kurtarma Ekibi Use Case 
+Görev Bilgisi Görüntüleme
+Göreve Konum ile Ulaşma
+Görevi Tamamlama ve Geri Bildirim Gönderme
+
+4. Sistemsel Use Caseler
+JWT ile Kimlik Doğrulama
+Push Bildirim Gönderme
+Konum Tabanlı Veri İşleme
+Veritabanı Yedekleme ve Kurta
