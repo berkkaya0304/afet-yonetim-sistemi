@@ -32,4 +32,7 @@ Görevi Tamamlama ve Geri Bildirim Gönderme
 JWT ile Kimlik Doğrulama
 Push Bildirim Gönderme
 Konum Tabanlı Veri İşleme
-Veritabanı Yedekleme ve Kurta
+Veritabanı Yedekleme ve Kurtarma
+
+------------------------------------ Database Bilgileri ------------------------------------
+
