@@ -1,1 +1,0 @@
-# havelsan-staj
