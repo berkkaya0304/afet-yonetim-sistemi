@@ -1,63 +1,92 @@
+# 🌐 Afet İletişim ve Koordinasyon Sistemi
 
------------------------------------- KULLANICILAR ------------------------------------
-1- Vatandaş
-2- AFAD Çalışanı
-3- Kurtarma Ekibi
+Türkiye’de meydana gelebilecek afetlerde;
+* vatandaşların hızlıca yardım çağrısı yapabildiği,  
+* gönüllü ve profesyonel ekiplerin kaynak–ihtiyaç eşleşmesini tek ekrandan yönetebildiği,  
+* yöneticilerin anlık durumsal farkındalık edinerek ekipleri koordine edebildiği  
 
------------------------------------- Sistemin Ana Amacı ------------------------------------
-Etkili İletişim ve Bilgi Akışı Sağlamak
-İhtiyaç ve Kaynakları Eşleştirmek
-Durumsal Farkındalık Yaratmak
-Gönüllü ve Ekip Organizasyonunu Kolaylaştırmak
+açık kaynaklı bir platform.
 
------------------------------------- Temel Use Caseler ------------------------------------
+---
 
-A. Vatandaşlar İçin Özellikleri
+## 📑 İçindekiler
+1. [Kullanıcı Rolleri](#-kullanıcı-rolleri)
+2. [Sistemin Ana Amacı](#-sistemin-ana-amacı)
+3. [Temel Use–Case’ler](#-temel-use-caseler)
+   * [Vatandaş](#vatandaşlar-için-özellikler)
+   * [Gönüllüler / Ekipler](#gönüllüler-ve-ekipler-için-özellikler)
+   * [Yöneticiler](#yöneticiler-için-özellikler-admin-paneli)
+4. [Teknolojiler](#-teknolojiler)
+5. [Veritabanı Şeması](#-database-bilgileri)
+6. [Kurulum](#-kurulum)
+7. [Katkı Sağlama](#-katkı-sağlama)
+8. [Lisans](#-lisans)
 
-Yardım Talebi Oluşturma:
-Konumunu (GPS ile otomatik) belirterek veya haritadan seçerek yardım çağrısı yapabilme.
-İhtiyaç türünü seçebilme (örn: Su, Gıda, Tıbbi Yardım, Enkaz Altında, Barınma).
-Kişi sayısı ve aciliyet durumu gibi detayları ekleyebilme.
-"Güvendeyim" Butonu:
-Tek bir tuşa basarak önceden belirlediği yakınlarına veya sisteme "güvendeyim" mesajı ve konumunu gönderebilme.
-Harita Arayüzü:
-Resmi olarak belirlenmiş Güvenli Toplanma Alanlarını ve Yardım Dağıtım Noktalarını harita üzerinde görebilme.
-Yoğun yardım taleplerinin olduğu bölgeleri (ısı haritası gibi) görebilme.
-Bilgi Akışı:
-Yöneticiler tarafından yayınlanan resmi duyuruları ve anlık bildirimleri alabilme.
+---
 
-B. Gönüllüler ve Ekipler İçin Özellikler:
+## 👥 Kullanıcı Rolleri
+| # | Rol            |
+|---|----------------|
+| 1 | **Vatandaş**   |
+| 2 | **AFAD Çalışanı** |
+| 3 | **Kurtarma Ekibi / Gönüllü** |
 
-Gönüllü Kaydı ve Profil:
-Sisteme kaydolma ve sahip olduğu yetkinlikleri (örn: Tıp bilgisi, şoförlük, teknik ekipman kullanma) belirtebilme.
-Görev Listesi ve Haritası:
-Yöneticiler tarafından onaylanmış ve atanmamış yardım taleplerini liste veya harita üzerinde görebilme.
-Bir görevi "üstlenerek" diğer gönüllülerin aynı işe gitmesini engelleme.
-Görev Yönetimi:
-Üstlendiği görevin durumunu güncelleyebilme (örn: "Yola çıktım", "Ulaştım", "Tamamlandı").
+---
 
-C. Yöneticiler İçin Özellikler (Admin Paneli):
+## 🎯 Sistemin Ana Amacı
+1. **Etkili İletişim ve Bilgi Akışı Sağlamak**  
+2. **İhtiyaç ve Kaynakları Eşleştirmek**  
+3. **Durumsal Farkındalık Yaratmak**  
+4. **Gönüllü ve Ekip Organizasyonunu Kolaylaştırmak**  
 
-Ana Kontrol Paneli (Dashboard):
-Sistemin genel durumunu gösteren ana ekran (Toplam talep sayısı, gönüllü sayısı, tamamlanan görevler vb.).
-Talep Yönetimi:
-Gelen tüm yardım taleplerini harita üzerinde ve liste olarak görme.
-Talepleri doğrulama, önceliklendirme ve reddetme.
-Talepleri belirli gönüllülere veya ekiplere atama.
-Gönüllü Yönetimi:
-Kayıtlı gönüllüleri ve yetkinliklerini görme.
-Gönüllülerin konumlarını ve görev durumlarını takip etme.
-Duyuru ve Bildirim Gönderme:
-Tüm kullanıcılara veya belirli bir bölgedeki kullanıcılara anlık bildirimler ve genel duyurular gönderebilme (örn: "X mahallesinde su dağıtımı başlamıştır.").
-Harita Yönetimi:
-Harita üzerine yeni toplanma alanı veya yardım dağıtım noktası ekleyip kaldırabilme.
+---
 
------------------------------------- Teknolojiler ------------------------------------
-1- Database: Postgresql
-2- Backend: Java Spring Boot
-3- Frontend: Angular
-4- Mobile: Flutter
-5- Saat(!!):
+## 📝 Temel Use-Caseler
 
------------------------------------- Database Bilgileri ------------------------------------
+### Vatandaşlar İçin Özellikler
+* **Yardım Talebi Oluşturma**
+  * Konum (GPS veya harita seçimi)
+  * İhtiyaç türü (Su, Gıda, Tıbbi, Enkaz, Barınma…)
+  * Kişi sayısı & aciliyet
+* **“Güvendeyim” Butonu**
+  * Tek tuş ile yakınlara/Sisteme konumlu mesaj
+* **Harita Arayüzü**
+  * Güvenli Toplanma Alanları & Yardım Noktaları
+  * Isı haritası ile yoğun talepler
+* **Bilgi Akışı**
+  * Resmî duyurular & anlık bildirimler
 
+### Gönüllüler ve Ekipler İçin Özellikler
+* **Gönüllü Kaydı ve Profil**
+  * Yetkinlik belirtme (Tıp, Şoförlük, Ekipman…)
+* **Görev Listesi & Harita**
+  * Onaylanmış/atanmamış talepleri görüntüleme
+  * “Görevi üstlen” ile çakışmaları engelleme
+* **Görev Yönetimi**
+  * Durum güncelleme (Yola çıktım → Ulaştım → Tamamlandı)
+
+### Yöneticiler İçin Özellikler (Admin Paneli)
+* **Dashboard**
+  * Toplam talep, aktif gönüllü, tamamlanan görev…
+* **Talep Yönetimi**
+  * Liste/harita görünümü
+  * Doğrulama, önceliklendirme, reddetme, atama
+* **Gönüllü Yönetimi**
+  * Yetkinlik & konum takibi
+* **Duyuru/Bildirim**
+  * Bölgeye özel veya genel
+* **Harita Yönetimi**
+  * Toplanma alanı / dağıtım noktası ekleme-kaldırma
+
+---
+
+## 🛠️ Teknolojiler
+* **Backend**: Java Spring Boot  
+* **Database**: PostgreSQL  
+* **Frontend (Web)**: Angular  
+* **Mobile**: Flutter  
+* **Gerçek-zamanlı Haberleşme**: WebSocket (⏰ “Saat(!!)” gereksinimi)  
+
+---
+
+## 🗄️ Database Bilgileri
