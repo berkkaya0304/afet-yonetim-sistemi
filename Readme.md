@@ -17,10 +17,6 @@ açık kaynaklı bir platform.
    * [Gönüllüler / Ekipler](#gönüllüler-ve-ekipler-için-özellikler)
    * [Yöneticiler](#yöneticiler-için-özellikler-admin-paneli)
 4. [Teknolojiler](#-teknolojiler)
-5. [Veritabanı Şeması](#-database-bilgileri)
-6. [Kurulum](#-kurulum)
-7. [Katkı Sağlama](#-katkı-sağlama)
-8. [Lisans](#-lisans)
 
 ---
 
