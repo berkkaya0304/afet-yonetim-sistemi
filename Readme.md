@@ -85,7 +85,7 @@ açık kaynaklı bir platform.
 * **Database**: PostgreSQL  
 * **Frontend (Web)**: Angular  
 * **Mobile**: Flutter  
-* **Gerçek-zamanlı Haberleşme**: WebSocket (⏰ “Saat(!!)” gereksinimi)  
+* **Saat Eklentisi(!!)**:
 
 ---
 
