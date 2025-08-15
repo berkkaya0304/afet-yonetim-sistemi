@@ -83,6 +83,10 @@ açık kaynaklı bir platform.
   * Bölgeye özel veya genel
 * **Harita Yönetimi**
   * Toplanma alanı / dağıtım noktası ekleme-kaldırma
+* **Rozet Yönetimi**
+  * Rozet Oluşturma ve Düzenleme: Sisteme yeni rozetler ekleyebilme (rozet adı, açıklaması, ikonu, kazanma kriteri).
+  * Kazanma Kriterlerini Belirleme: "10 görev tamamlayınca X rozetini kazan" gibi kuralları tanımlayabilme.
+  * Manuel Rozet Verme: Olağanüstü çaba gösteren bir gönüllüye özel bir rozeti manuel olarak atayabilme (örn: "Günün Kahramanı" rozeti).
 
 ---
 
