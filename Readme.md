@@ -96,7 +96,8 @@ açık kaynaklı bir platform.
 * **Frontend (Web)**: Angular  
 * **Mobile**: Flutter  
 * **Saat Eklentisi(!!)**:
-
+* **Containerization**: Docker
+  
 ---
 
 ## 🗄️ Database Bilgileri
