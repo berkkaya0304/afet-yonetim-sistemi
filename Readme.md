@@ -108,7 +108,8 @@ açık kaynaklı bir platform.
 
 ### Database Kodu
 
--- Özel veri türlerini (ENUM) oluşturuyoruz. Bu, veri tutarlılığını artırır.
+```sql
+-- ENUM Types
 CREATE TYPE user_role AS ENUM ('vatandas', 'gonullu', 'yonetici');
 CREATE TYPE request_type_enum AS ENUM ('gida', 'su', 'tibbi', 'enkaz', 'barinma');
 CREATE TYPE request_status_enum AS ENUM ('beklemede', 'onaylandi', 'atanmis', 'tamamlandi', 'reddedildi');
@@ -116,8 +117,7 @@ CREATE TYPE urgency_enum AS ENUM ('dusuk', 'orta', 'yuksek');
 CREATE TYPE assignment_status_enum AS ENUM ('atanmis', 'yolda', 'tamamlandi', 'iptal_edildi');
 CREATE TYPE zone_type_enum AS ENUM ('toplanma_alani', 'yardim_dagitim');
 
-
--- Tablo: Kullanıcılar (Sisteme giriş yapan herkes)
+-- Users
 CREATE TABLE Users (
     id SERIAL PRIMARY KEY,
     full_name VARCHAR(100) NOT NULL,
@@ -130,10 +130,10 @@ CREATE TABLE Users (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
--- Tablo: Yardım Talepleri (Vatandaşların oluşturduğu)
+-- HelpRequests
 CREATE TABLE HelpRequests (
     id SERIAL PRIMARY KEY,
-    requester_id INT REFERENCES Users(id) ON DELETE SET NULL, -- Kullanıcı silinse bile talebi kalsın
+    requester_id INT REFERENCES Users(id) ON DELETE SET NULL,
     request_type request_type_enum NOT NULL,
     details TEXT,
     latitude DECIMAL(10, 7) NOT NULL,
@@ -143,17 +143,17 @@ CREATE TABLE HelpRequests (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
--- Tablo: Görevler (Gönüllülere atanan talepler)
+-- Assignments
 CREATE TABLE Assignments (
     id SERIAL PRIMARY KEY,
-    request_id INT UNIQUE REFERENCES HelpRequests(id) ON DELETE CASCADE, -- Talep silinirse atama da silinsin
-    volunteer_id INT REFERENCES Users(id) ON DELETE CASCADE, -- Gönüllü silinirse atama da silinsin
+    request_id INT UNIQUE REFERENCES HelpRequests(id) ON DELETE CASCADE,
+    volunteer_id INT REFERENCES Users(id) ON DELETE CASCADE,
     status assignment_status_enum NOT NULL DEFAULT 'atanmis',
     assigned_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     completed_at TIMESTAMP WITH TIME ZONE
 );
 
--- Tablo: Rozetler (Kazanılacak ödüller)
+-- Badges
 CREATE TABLE Badges (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) UNIQUE NOT NULL,
@@ -162,38 +162,38 @@ CREATE TABLE Badges (
     criteria_text VARCHAR(255)
 );
 
--- Tablo: Kazanılan Rozetler (Hangi kullanıcının hangi rozeti kazandığı)
+-- UserBadges
 CREATE TABLE UserBadges (
     id SERIAL PRIMARY KEY,
     user_id INT NOT NULL REFERENCES Users(id) ON DELETE CASCADE,
     badge_id INT NOT NULL REFERENCES Badges(id) ON DELETE CASCADE,
     earned_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    UNIQUE (user_id, badge_id) -- Bir kullanıcı aynı rozeti birden fazla kez kazanamaz
+    UNIQUE (user_id, badge_id)
 );
 
--- Tablo: Yetkinlikler (Gönüllülerin sahip olabileceği)
+-- Skills
 CREATE TABLE Skills (
     id SERIAL PRIMARY KEY,
     skill_name VARCHAR(100) UNIQUE NOT NULL
 );
 
--- Tablo: Kullanıcı Yetkinlikleri (Çoka-çok ilişki için)
+-- UserSkills
 CREATE TABLE UserSkills (
     user_id INT NOT NULL REFERENCES Users(id) ON DELETE CASCADE,
     skill_id INT NOT NULL REFERENCES Skills(id) ON DELETE CASCADE,
-    PRIMARY KEY (user_id, skill_id) -- Bileşik birincil anahtar
+    PRIMARY KEY (user_id, skill_id)
 );
 
--- Tablo: Duyurular (Yöneticilerin yayınladığı)
+-- Announcements
 CREATE TABLE Announcements (
     id SERIAL PRIMARY KEY,
-    admin_id INT REFERENCES Users(id) ON DELETE SET NULL, -- Admin silinse bile duyuru kalsın
+    admin_id INT REFERENCES Users(id) ON DELETE SET NULL,
     title VARCHAR(255) NOT NULL,
     content TEXT NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
--- Tablo: Güvenli Alanlar ve Yardım Noktaları
+-- SafeZones
 CREATE TABLE SafeZones (
     id SERIAL PRIMARY KEY,
     name VARCHAR(150) NOT NULL,
@@ -204,9 +204,8 @@ CREATE TABLE SafeZones (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
--- Performans için sık kullanılan sütunlara index ekleyelim
+-- Indexes
 CREATE INDEX idx_helprequests_location ON HelpRequests (latitude, longitude);
 CREATE INDEX idx_helprequests_status ON HelpRequests (status);
 CREATE INDEX idx_assignments_volunteer ON Assignments (volunteer_id);
 CREATE INDEX idx_safezones_location ON SafeZones (latitude, longitude);
-
