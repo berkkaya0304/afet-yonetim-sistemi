@@ -101,3 +101,112 @@ açık kaynaklı bir platform.
 ---
 
 ## 🗄️ Database Bilgileri
+
+### ER Diagram
+
+<img width="1564" height="1380" alt="Untitled" src="https://github.com/user-attachments/assets/d0a0bd54-9a51-4cdb-9a87-2b4a5033b026" />
+
+### Database Kodu
+
+-- Özel veri türlerini (ENUM) oluşturuyoruz. Bu, veri tutarlılığını artırır.
+CREATE TYPE user_role AS ENUM ('vatandas', 'gonullu', 'yonetici');
+CREATE TYPE request_type_enum AS ENUM ('gida', 'su', 'tibbi', 'enkaz', 'barinma');
+CREATE TYPE request_status_enum AS ENUM ('beklemede', 'onaylandi', 'atanmis', 'tamamlandi', 'reddedildi');
+CREATE TYPE urgency_enum AS ENUM ('dusuk', 'orta', 'yuksek');
+CREATE TYPE assignment_status_enum AS ENUM ('atanmis', 'yolda', 'tamamlandi', 'iptal_edildi');
+CREATE TYPE zone_type_enum AS ENUM ('toplanma_alani', 'yardim_dagitim');
+
+
+-- Tablo: Kullanıcılar (Sisteme giriş yapan herkes)
+CREATE TABLE Users (
+    id SERIAL PRIMARY KEY,
+    full_name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    phone_number VARCHAR(20) UNIQUE,
+    role user_role NOT NULL DEFAULT 'vatandas',
+    last_known_lat DECIMAL(10, 7),
+    last_known_lon DECIMAL(10, 7),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Tablo: Yardım Talepleri (Vatandaşların oluşturduğu)
+CREATE TABLE HelpRequests (
+    id SERIAL PRIMARY KEY,
+    requester_id INT REFERENCES Users(id) ON DELETE SET NULL, -- Kullanıcı silinse bile talebi kalsın
+    request_type request_type_enum NOT NULL,
+    details TEXT,
+    latitude DECIMAL(10, 7) NOT NULL,
+    longitude DECIMAL(10, 7) NOT NULL,
+    status request_status_enum NOT NULL DEFAULT 'beklemede',
+    urgency urgency_enum NOT NULL DEFAULT 'orta',
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Tablo: Görevler (Gönüllülere atanan talepler)
+CREATE TABLE Assignments (
+    id SERIAL PRIMARY KEY,
+    request_id INT UNIQUE REFERENCES HelpRequests(id) ON DELETE CASCADE, -- Talep silinirse atama da silinsin
+    volunteer_id INT REFERENCES Users(id) ON DELETE CASCADE, -- Gönüllü silinirse atama da silinsin
+    status assignment_status_enum NOT NULL DEFAULT 'atanmis',
+    assigned_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    completed_at TIMESTAMP WITH TIME ZONE
+);
+
+-- Tablo: Rozetler (Kazanılacak ödüller)
+CREATE TABLE Badges (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) UNIQUE NOT NULL,
+    description TEXT NOT NULL,
+    icon_url VARCHAR(255),
+    criteria_text VARCHAR(255)
+);
+
+-- Tablo: Kazanılan Rozetler (Hangi kullanıcının hangi rozeti kazandığı)
+CREATE TABLE UserBadges (
+    id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL REFERENCES Users(id) ON DELETE CASCADE,
+    badge_id INT NOT NULL REFERENCES Badges(id) ON DELETE CASCADE,
+    earned_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE (user_id, badge_id) -- Bir kullanıcı aynı rozeti birden fazla kez kazanamaz
+);
+
+-- Tablo: Yetkinlikler (Gönüllülerin sahip olabileceği)
+CREATE TABLE Skills (
+    id SERIAL PRIMARY KEY,
+    skill_name VARCHAR(100) UNIQUE NOT NULL
+);
+
+-- Tablo: Kullanıcı Yetkinlikleri (Çoka-çok ilişki için)
+CREATE TABLE UserSkills (
+    user_id INT NOT NULL REFERENCES Users(id) ON DELETE CASCADE,
+    skill_id INT NOT NULL REFERENCES Skills(id) ON DELETE CASCADE,
+    PRIMARY KEY (user_id, skill_id) -- Bileşik birincil anahtar
+);
+
+-- Tablo: Duyurular (Yöneticilerin yayınladığı)
+CREATE TABLE Announcements (
+    id SERIAL PRIMARY KEY,
+    admin_id INT REFERENCES Users(id) ON DELETE SET NULL, -- Admin silinse bile duyuru kalsın
+    title VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Tablo: Güvenli Alanlar ve Yardım Noktaları
+CREATE TABLE SafeZones (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(150) NOT NULL,
+    zone_type zone_type_enum NOT NULL,
+    latitude DECIMAL(10, 7) NOT NULL,
+    longitude DECIMAL(10, 7) NOT NULL,
+    added_by_admin_id INT REFERENCES Users(id) ON DELETE SET NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Performans için sık kullanılan sütunlara index ekleyelim
+CREATE INDEX idx_helprequests_location ON HelpRequests (latitude, longitude);
+CREATE INDEX idx_helprequests_status ON HelpRequests (status);
+CREATE INDEX idx_assignments_volunteer ON Assignments (volunteer_id);
+CREATE INDEX idx_safezones_location ON SafeZones (latitude, longitude);
+
