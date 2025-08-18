@@ -63,12 +63,12 @@ açık kaynaklı bir platform.
   * Durum güncelleme (Yola çıktım → Ulaştım → Tamamlandı)
   * Rozet ve Ödüllendirme Sistemi ✨
        * Otomatik Rozet Kazanımı: Belirli kriterler karşılandığında sistem tarafından otomatik olarak rozet kazanma. Örnekler:
-           * "İlk Adım": İlk görevini başarıyla tamamladığında.
-           * "Yardımsever" (Seviye 1-2-3): 5, 15, 30 görev tamamladığında.
-           * "Sıhhiyeci": İlk yardım veya tıbbi destek içeren bir görevi tamamladığında.
-           * "Lojistik Destek": Taşıma veya dağıtım içeren 5 görevi tamamladığında.
-           * "Gece Kartalı": Gece saatlerinde bir görevi tamamladığında.
-           * "Kararlı Gönüllü": Üst üste 3 gün boyunca en az bir görev tamamladığında.
+            * "İlk Adım": İlk görevini başarıyla tamamladığında.
+            * "Yardımsever" (Seviye 1-2-3): 5, 15, 30 görev tamamladığında.
+            * "Sıhhiyeci": İlk yardım veya tıbbi destek içeren bir görevi tamamladığında.
+            * "Lojistik Destek": Taşıma veya dağıtım içeren 5 görevi tamamladığında.
+            * "Gece Kartalı": Gece saatlerinde bir görevi tamamladığında.
+            * "Kararlı Gönüllü": Üst üste 3 gün boyunca en az bir görev tamamladığında.
        * Liderlik Tablosu 
 
 ### Yöneticiler İçin Özellikler (Admin Paneli)
