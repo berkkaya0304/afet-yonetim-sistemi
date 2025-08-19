@@ -204,8 +204,24 @@ CREATE TABLE SafeZones (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
+
+
 -- Indexes
 CREATE INDEX idx_helprequests_location ON HelpRequests (latitude, longitude);
 CREATE INDEX idx_helprequests_status ON HelpRequests (status);
 CREATE INDEX idx_assignments_volunteer ON Assignments (volunteer_id);
 CREATE INDEX idx_safezones_location ON SafeZones (latitude, longitude);
+
+```
+### Database PostGIS Integration
+
+```sql
+CREATE EXTENSION postgis;
+
+ALTER TABLE help_requests DROP COLUMN latitude;
+ALTER TABLE help_requests DROP COLUMN longitude;
+
+ALTER TABLE help_requests ADD COLUMN location GEOGRAPHY(Point, 4326);
+
+CREATE INDEX idx_helprequests_location_gist ON help_requests USING GIST (location);
+```
