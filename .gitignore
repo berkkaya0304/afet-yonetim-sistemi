@@ -1,0 +1,61 @@
+# Maven build
+/target/
+!.mvn/wrapper/maven-wrapper.jar
+.mvn/
+.settings/
+.classpath
+.project
+
+# Gradle build
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Eclipse
+*.classpath
+*.project
+*.settings/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# VS Code
+.vscode/
+
+# Logs
+logs/
+*.log
+*.out
+*.err
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment / credentials
+.env
+*.properties.local
+application-*.yml
+application-*.yaml
+application-*.properties
+
+# Jars / compiled
+*.class
+*.jar
+*.war
+*.ear
+
+# Coverage / Reports
+/coverage/
+*.lcov
+*.exec
+/test-output/
+.surefire-*
+/jacoco.exec
+
+# Other
+node_modules/

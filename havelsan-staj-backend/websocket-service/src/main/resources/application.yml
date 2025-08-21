@@ -1,0 +1,25 @@
+server:
+  port: 8086 # Yeni servisimiz için yeni bir port
+
+spring:
+  application:
+    name: websocket-service
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+# Harita güncellemeleri için kullan?lacak exchange ve queue isimleri
+app:
+  rabbitmq:
+    exchange: "afet_exchange"
+    queues:
+      map-update: "map_update_queue"
+    routing-keys:
+      map-update: "map_update_routingKey"
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
