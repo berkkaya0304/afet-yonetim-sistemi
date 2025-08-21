@@ -229,3 +229,5 @@ CREATE INDEX idx_assignments_volunteer ON Assignments (volunteer_id);
 ```sql
 CREATE EXTENSION postgis;
 ```
+
+## Backend Bilgileri
