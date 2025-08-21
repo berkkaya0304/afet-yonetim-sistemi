@@ -117,6 +117,21 @@ CREATE TYPE urgency_enum AS ENUM ('dusuk', 'orta', 'yuksek');
 CREATE TYPE assignment_status_enum AS ENUM ('atanmis', 'yolda', 'tamamlandi', 'iptal_edildi');
 CREATE TYPE zone_type_enum AS ENUM ('toplanma_alani', 'yardim_dagitim');
 
+-- Locations
+CREATE TABLE Locations (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(150),
+    location GEOGRAPHY(Point, 4326) NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Disaster Types
+CREATE TABLE DisasterTypes (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) UNIQUE NOT NULL,
+    description TEXT
+);
+
 -- Users
 CREATE TABLE Users (
     id SERIAL PRIMARY KEY,
@@ -125,8 +140,7 @@ CREATE TABLE Users (
     password_hash VARCHAR(255) NOT NULL,
     phone_number VARCHAR(20) UNIQUE,
     role user_role NOT NULL DEFAULT 'vatandas',
-    last_known_lat DECIMAL(10, 7),
-    last_known_lon DECIMAL(10, 7),
+    last_known_location_id INT REFERENCES Locations(id) ON DELETE SET NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -136,8 +150,8 @@ CREATE TABLE HelpRequests (
     requester_id INT REFERENCES Users(id) ON DELETE SET NULL,
     request_type request_type_enum NOT NULL,
     details TEXT,
-    latitude DECIMAL(10, 7) NOT NULL,
-    longitude DECIMAL(10, 7) NOT NULL,
+    location_id INT REFERENCES Locations(id) ON DELETE CASCADE,
+    disaster_type_id INT REFERENCES DisasterTypes(id) ON DELETE SET NULL,
     status request_status_enum NOT NULL DEFAULT 'beklemede',
     urgency urgency_enum NOT NULL DEFAULT 'orta',
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
@@ -198,30 +212,22 @@ CREATE TABLE SafeZones (
     id SERIAL PRIMARY KEY,
     name VARCHAR(150) NOT NULL,
     zone_type zone_type_enum NOT NULL,
-    latitude DECIMAL(10, 7) NOT NULL,
-    longitude DECIMAL(10, 7) NOT NULL,
+    location_id INT NOT NULL REFERENCES Locations(id) ON DELETE CASCADE,
     added_by_admin_id INT REFERENCES Users(id) ON DELETE SET NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
-
-
 -- Indexes
-CREATE INDEX idx_helprequests_location ON HelpRequests (latitude, longitude);
+CREATE INDEX idx_locations_latlon ON Locations (latitude, longitude);
 CREATE INDEX idx_helprequests_status ON HelpRequests (status);
 CREATE INDEX idx_assignments_volunteer ON Assignments (volunteer_id);
-CREATE INDEX idx_safezones_location ON SafeZones (latitude, longitude);
+
 
 ```
 ### Database PostGIS Integration
 
 ```sql
 CREATE EXTENSION postgis;
-
-ALTER TABLE help_requests DROP COLUMN latitude;
-ALTER TABLE help_requests DROP COLUMN longitude;
-
-ALTER TABLE help_requests ADD COLUMN location GEOGRAPHY(Point, 4326);
 
 CREATE INDEX idx_helprequests_location_gist ON help_requests USING GIST (location);
 ```
