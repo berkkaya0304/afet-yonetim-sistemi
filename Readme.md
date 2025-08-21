@@ -228,6 +228,4 @@ CREATE INDEX idx_assignments_volunteer ON Assignments (volunteer_id);
 
 ```sql
 CREATE EXTENSION postgis;
-
-CREATE INDEX idx_helprequests_location_gist ON help_requests USING GIST (location);
 ```
