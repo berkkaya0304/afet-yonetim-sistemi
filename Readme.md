@@ -104,7 +104,7 @@ açık kaynaklı bir platform.
 
 ### ER Diagram
 
-<img width="2195" height="1297" alt="Untitled (1)" src="https://github.com/user-attachments/assets/6dca21ce-24aa-4199-9d6b-d9012699967f" />
+<img width="2166" height="1588" alt="Untitled (2)" src="https://github.com/user-attachments/assets/11292e7f-881e-4143-b7fc-eb0b5fe556d6" />
 
 ### Database Kodu
 
