@@ -229,5 +229,8 @@ CREATE INDEX idx_assignments_volunteer ON Assignments (volunteer_id);
 ```sql
 CREATE EXTENSION postgis;
 ```
+### Database Liquibase Extension
+
+In the project, I am using Liquibase for managing database.
 
 ## Backend Bilgileri
