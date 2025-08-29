@@ -94,7 +94,6 @@ açık kaynaklı bir platform.
 * **Backend**: Java Spring Boot  
 * **Database**: PostgreSQL  
 * **Frontend (Web)**: Angular  
-* **Mobile**: Flutter  
 * **Saat Eklentisi(!!)**:
 * **Containerization**: Docker
   
