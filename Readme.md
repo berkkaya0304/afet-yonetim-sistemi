@@ -1,4 +1,6 @@
 # 🌐 Afet İletişim ve Koordinasyon Sistemi
+English Medium Article: [Click the Link!](https://blog.berkkaya.me/disaster-management-system-my-full-stack-project-81bad2e3e15c)
+
 
 Türkiye’de meydana gelebilecek afetlerde;
 * vatandaşların hızlıca yardım çağrısı yapabildiği,  
