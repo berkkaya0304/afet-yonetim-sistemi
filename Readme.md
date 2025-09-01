@@ -525,3 +525,5 @@ mvn verify
 # Test coverage raporu
 mvn jacoco:report
 ```
+
+## Frontend Bilgileri
