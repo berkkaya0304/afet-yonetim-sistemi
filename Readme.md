@@ -527,3 +527,207 @@ mvn jacoco:report
 ```
 
 ## Frontend Bilgileri
+
+Bu proje, afet durumlarında vatandaşlar, gönüllüler ve yöneticiler arasında koordinasyonu sağlayan modern bir web uygulamasıdır. Angular 20 framework'ü kullanılarak geliştirilmiştir.
+
+### 🚀 Özellikler
+
+#### 👥 Kullanıcı Rolleri
+- **Vatandaş**: Yardım talebi oluşturma, güvenli bölge bilgilerini görüntüleme
+- **Gönüllü**: Yardım taleplerini kabul etme, görev atamaları, takım çalışması
+- **Yönetici**: Sistem yönetimi, kullanıcı yönetimi, raporlama
+
+#### 🗺️ Harita ve Konum Özellikleri
+- Gerçek zamanlı harita entegrasyonu (Leaflet)
+- Kullanıcı konum takibi
+- Güvenli bölge işaretleme
+- Yardım taleplerinin harita üzerinde görüntülenmesi
+
+#### 📱 Modern Web Teknolojileri
+- Angular 20 ile geliştirilmiş
+- Responsive tasarım (Tailwind CSS)
+- WebSocket desteği ile gerçek zamanlı iletişim
+- JWT tabanlı kimlik doğrulama
+
+### 🛠️ Teknoloji Stack'i
+
+#### Frontend Framework
+- **Angular**: 20.2.1
+- **TypeScript**: 5.8.0
+- **SCSS**: Stil dosyaları için
+
+#### UI ve Stil
+- **Tailwind CSS**: 3.4.17 - Modern ve responsive tasarım
+- **PostCSS**: CSS işleme
+- **Autoprefixer**: Tarayıcı uyumluluğu
+
+#### Harita ve Gerçek Zamanlı İletişim
+- **Leaflet**: 1.9.4 - Harita entegrasyonu
+- **WebSocket**: STOMP protokolü ile gerçek zamanlı iletişim
+- **SockJS**: WebSocket fallback desteği
+
+#### Test ve Geliştirme
+- **Jasmine**: Unit test framework
+- **Karma**: Test runner
+- **Angular CLI**: Geliştirme araçları
+
+### 📁 Proje Yapısı
+
+```
+src/
+├── app/
+│   ├── core/                    # Çekirdek servisler ve modeller
+│   │   ├── guards/             # Route koruma servisleri
+│   │   ├── interceptors/       # HTTP interceptor'ları
+│   │   ├── models/             # Veri modelleri
+│   │   └── services/           # API ve iş mantığı servisleri
+│   ├── features/               # Özellik modülleri
+│   │   ├── admin/             # Yönetici paneli
+│   │   ├── auth/              # Kimlik doğrulama
+│   │   ├── dashboard/         # Ana dashboard
+│   │   ├── help-requests/     # Yardım talepleri
+│   │   ├── volunteer/         # Gönüllü modülü
+│   │   └── user/              # Kullanıcı yönetimi
+│   └── shared/                # Paylaşılan bileşenler
+└── environments/               # Ortam konfigürasyonları
+```
+
+### 🚀 Kurulum ve Çalıştırma
+
+#### Gereksinimler
+- Node.js (v18 veya üzeri)
+- npm veya yarn
+- Angular CLI
+
+#### Kurulum Adımları
+
+1. **Projeyi klonlayın**
+   ```bash
+   git clone [repository-url]
+   cd disaster-management-system
+   ```
+
+2. **Bağımlılıkları yükleyin**
+   ```bash
+   npm install
+   ```
+
+3. **Geliştirme sunucusunu başlatın**
+   ```bash
+   npm start
+   ```
+
+4. **Tarayıcıda açın**
+   ```
+   http://localhost:4200
+   ```
+
+#### Diğer Komutlar
+
+```bash
+# Production build
+npm run build
+
+# Test çalıştırma
+npm test
+
+# Build izleme (development)
+npm run watch
+```
+
+### 🔧 Konfigürasyon
+
+#### Proxy Ayarları
+`proxy.conf.json` dosyasında backend API endpoint'leri tanımlanmıştır.
+
+#### Ortam Değişkenleri
+- `src/environments/environment.ts` - Geliştirme ortamı
+- `src/environments/environment.prod.ts` - Production ortamı
+
+### 📱 Kullanım Senaryoları
+
+#### Vatandaş Kullanımı
+1. Sisteme kayıt olma
+2. Yardım talebi oluşturma
+3. Güvenli bölge bilgilerini görüntüleme
+4. Bildirim alma
+
+#### Gönüllü Kullanımı
+1. Gönüllü olarak kayıt olma
+2. Becerilerini belirtme
+3. Yardım taleplerini kabul etme
+4. Takım çalışması yapma
+
+#### Yönetici Kullanımı
+1. Kullanıcıları yönetme
+2. Gönüllüleri koordine etme
+3. Sistem raporlarını görüntüleme
+4. Afet durumlarını takip etme
+
+### 🔒 Güvenlik
+
+- JWT tabanlı kimlik doğrulama
+- Role-based access control (RBAC)
+- Route koruma servisleri
+- Güvenli HTTP interceptor'ları
+
+### 🌐 API Entegrasyonu
+
+- RESTful API desteği
+- WebSocket ile gerçek zamanlı iletişim
+- HTTP interceptor ile otomatik token yönetimi
+
+### 📊 Test
+
+```bash
+# Unit testleri çalıştır
+npm test
+
+# Test coverage raporu
+npm run test:coverage
+```
+
+### 🚀 Deployment
+
+#### Production Build
+```bash
+npm run build
+```
+
+Build çıktısı `dist/` klasöründe oluşturulur.
+
+#### Sunucu Gereksinimleri
+- Node.js web sunucusu
+- HTTPS desteği (production için)
+- WebSocket desteği
+
+## 🤝 Katkıda Bulunma
+
+1. Fork yapın
+2. Feature branch oluşturun (`git checkout -b feature/amazing-feature`)
+3. Değişikliklerinizi commit edin (`git commit -m 'Add amazing feature'`)
+4. Branch'inizi push edin (`git push origin feature/amazing-feature`)
+5. Pull Request oluşturun
+
+## 📄 Lisans
+
+Bu proje özel bir proje olup, ticari kullanım için geliştirilmiştir.
+
+## 📞 İletişim
+
+Proje hakkında sorularınız için:
+- **Geliştirici**: HAVELSAN Staj Projesi
+- **Proje**: Afet Yönetim Sistemi Frontend
+
+## 🔄 Güncellemeler
+
+### v0.0.0
+- İlk sürüm
+- Temel kullanıcı rolleri
+- Harita entegrasyonu
+- WebSocket desteği
+- JWT kimlik doğrulama
+
+---
+
+**Not**: Bu proje afet yönetimi alanında kullanılmak üzere tasarlanmıştır ve sürekli geliştirilmektedir.
