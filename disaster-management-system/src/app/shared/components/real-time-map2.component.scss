@@ -1,0 +1,402 @@
+.sample-data-badge {
+    background-color: #10b981;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.8em;
+  }
+  
+  .sample-data-text {
+    margin: 0;
+    font-style: italic;
+  }
+  
+  /* Earthquake Simulation */
+  .earthquake-simulation-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(239, 68, 68, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 998;
+    backdrop-filter: blur(3px);
+    animation: earthquake-shake 0.5s infinite;
+  }
+  
+  .earthquake-simulation-content {
+    text-align: center;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 25px 80px rgba(239, 68, 68, 0.3);
+    border: 3px solid #ef4444;
+    max-width: 500px;
+    animation: earthquake-bounce 2s infinite;
+  }
+  
+  .earthquake-icon {
+    font-size: 4em;
+    margin-bottom: 20px;
+    animation: earthquake-pulse-icon 1s infinite;
+  }
+  
+  .earthquake-simulation-content h3 {
+    color: #dc2626;
+    margin: 0 0 20px 0;
+    font-size: 1.5em;
+    font-weight: 700;
+  }
+  
+  .earthquake-spinner {
+    width: 60px;
+    height: 60px;
+    border: 5px solid #fecaca;
+    border-top: 5px solid #ef4444;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+  }
+  
+  .simulation-info {
+    font-size: 0.9em;
+    color: #6b7280;
+    margin-top: 15px;
+    font-style: italic;
+  }
+  
+  .simulation-progress {
+    margin-top: 25px;
+  }
+  
+  .progress-bar {
+    width: 100%;
+    height: 8px;
+    background-color: #fecaca;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+  
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ef4444, #dc2626);
+    border-radius: 4px;
+    animation: progress-fill 5s ease-in-out infinite;
+  }
+  
+  .progress-text {
+    font-size: 0.9em;
+    color: #ef4444;
+    font-weight: 600;
+  }
+  
+  .earthquake-simulation-notice {
+    margin-top: 15px;
+    padding: 15px;
+    background: linear-gradient(135deg, #fef2f2, #fee2e2);
+    border: 2px solid #ef4444;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  .earthquake-simulation-badge {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.9em;
+    display: inline-block;
+    margin-bottom: 10px;
+    animation: earthquake-badge-pulse 2s infinite;
+  }
+  
+  .earthquake-simulation-text {
+    margin: 10px 0;
+    color: #dc2626;
+    font-weight: 600;
+    font-size: 0.95em;
+  }
+  
+  .simulation-stats {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 15px;
+    gap: 10px;
+    
+    .stat-item {
+      background: white;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.85em;
+      font-weight: 600;
+      color: #dc2626;
+      border: 1px solid #fecaca;
+    }
+  }
+  
+  /* Animations */
+  @keyframes pulse-glow {
+    0%, 100% { transform: scale(1); filter: drop-shadow(0 4px 8px rgba(245, 158, 11, 0.3)); }
+    50% { transform: scale(1.1); filter: drop-shadow(0 6px 12px rgba(245, 158, 11, 0.5)); }
+  }
+  
+  @keyframes safe-glow {
+    0%, 100% { transform: scale(1); filter: drop-shadow(0 4px 8px rgba(16, 185, 129, 0.3)); }
+    50% { transform: scale(1.05); filter: drop-shadow(0 6px 12px rgba(16, 185, 129, 0.5)); }
+  }
+  
+  @keyframes assignment-glow {
+    0%, 100% { transform: scale(1); filter: drop-shadow(0 4px 8px rgba(59, 130, 246, 0.3)); }
+    50% { transform: scale(1.08); filter: drop-shadow(0 6px 12px rgba(59, 130, 246, 0.5)); }
+  }
+  
+  @keyframes emergency-pulse {
+    0%, 100% { transform: scale(1); filter: drop-shadow(0 4px 8px rgba(239, 68, 68, 0.3)); }
+    50% { transform: scale(1.15); filter: drop-shadow(0 8px 16px rgba(239, 68, 68, 0.6)); }
+  }
+  
+  @keyframes user-bounce {
+    0%, 100% { transform: translateY(0); filter: drop-shadow(0 4px 8px rgba(139, 92, 246, 0.3)); }
+    50% { transform: translateY(-2px); filter: drop-shadow(0 6px 12px rgba(139, 92, 246, 0.5)); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+  
+  @keyframes earthquake-pulse {
+    0%, 100% { 
+      transform: scale(1); 
+      box-shadow: 0 8px 25px rgba(239, 68, 68, 0.3);
+    }
+    50% { 
+      transform: scale(1.05); 
+      box-shadow: 0 12px 35px rgba(239, 68, 68, 0.5);
+    }
+  }
+  
+  @keyframes earthquake-shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-2px); }
+    75% { transform: translateX(2px); }
+  }
+  
+  @keyframes earthquake-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+  
+  @keyframes earthquake-pulse-icon {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+  
+  @keyframes progress-fill {
+    0% { width: 0%; }
+    50% { width: 100%; }
+    100% { width: 0%; }
+  }
+  
+  @keyframes earthquake-badge-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .map-controls {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    
+    .control-group {
+      justify-content: center;
+    }
+    
+    .leaflet-map {
+      height: 400px;
+    }
+    
+    .map-info-panel {
+      grid-template-columns: 1fr;
+    }
+  
+    .test-button-group {
+      flex-direction: column;
+      align-items: center;
+      
+      .btn {
+        width: 100%;
+        max-width: 200px;
+      }
+    }
+  }
+  
+  .info-section {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    
+    h4 {
+      margin: 0 0 15px 0;
+      color: #1e293b;
+      font-size: 1.1em;
+    }
+  }
+  
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 15px;
+  }
+  
+  .stat-item {
+    text-align: center;
+    padding: 10px;
+    background: #f8fafc;
+    border-radius: 6px;
+  }
+  
+  .stat-label {
+    display: block;
+    font-size: 0.9em;
+    color: #64748b;
+    margin-bottom: 5px;
+  }
+  
+  .stat-value {
+    display: block;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #1e293b;
+  }
+  
+  .visible-types {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .type-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    font-weight: 500;
+    color: white;
+    
+    &.type-help_request { background-color: #f59e0b; }
+    &.type-safe_zone { background-color: #10b981; }
+    &.type-assignment { background-color: #3b82f6; }
+    &.type-emergency_alert { background-color: #ef4444; }
+    &.type-user_location { background-color: #8b5cf6; }
+  }
+  
+  /* Control Buttons */
+  .control-buttons {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .test-buttons {
+    background: #f8fafc;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+    
+    h4 {
+      text-align: center;
+      margin: 0 0 15px 0;
+      color: #1e293b;
+      font-size: 1.1em;
+    }
+  }
+  
+  .test-button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    
+    .btn {
+      margin: 0;
+      min-width: 140px;
+      font-size: 0.9em;
+    }
+  }
+  
+  .btn {
+    margin: 0 8px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    }
+    
+    &.btn-primary { background-color: #3b82f6; color: white; }
+    &.btn-secondary { background-color: #6b7280; color: white; }
+    &.btn-danger { background-color: #ef4444; color: white; }
+    &.btn-info { background-color: #06b6d4; color: white; }
+    &.btn-warning { background-color: #f59e0b; color: white; }
+    &.btn-success { background-color: #10b981; color: white; }
+    &.btn-purple { background-color: #8b5cf6; color: white; }
+    
+    &.btn-earthquake {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: white;
+      font-weight: 700;
+      font-size: 1.1em;
+      padding: 15px 30px;
+      border: 2px solid #dc2626;
+      box-shadow: 0 8px 25px rgba(239, 68, 68, 0.3);
+      animation: earthquake-pulse 2s infinite;
+      
+      &:hover {
+        background: linear-gradient(135deg, #dc2626, #b91c1c);
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 12px 35px rgba(239, 68, 68, 0.4);
+      }
+      
+      &:active {
+        transform: translateY(-1px) scale(1.02);
+      }
+    }
+  }
+  
+  /* Sample Data Notice */
+  .sample-data-notice {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9em;
+    color: #4b5563;
+  }

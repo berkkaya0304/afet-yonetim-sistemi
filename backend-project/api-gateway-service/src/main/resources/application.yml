@@ -1,0 +1,16 @@
+server:
+  port: 8080
+
+jwt:
+  secret-key: 472D4B6150645367566B5970337336763979244226452948404D635165546857
+
+spring:
+  main:
+    web-application-type: reactive
+  application:
+    name: api-gateway-service
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka

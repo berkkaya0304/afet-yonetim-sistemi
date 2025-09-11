@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  # Frontend Angular Application
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: disaster-management-frontend
+    ports:
+      - "4200:80"
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - backend
+    networks:
+      - disaster-network
+    restart: unless-stopped
+
+networks:
+  disaster-network:
+    driver: bridge

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>DisasterManagementSystem</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  
+  <!-- Leaflet CSS for maps -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin=""/>
+  
+  <!-- Global polyfills for STOMP.js and sockjs-client -->
+  <script>
+    // Comprehensive polyfills for Node.js compatibility in browser
+    if (typeof window !== 'undefined') {
+      // Global object
+      window.global = window;
+      
+      // Process object
+      window.process = {
+        env: {},
+        browser: true,
+        version: '',
+        versions: {},
+        platform: 'browser',
+        arch: 'x64',
+        title: 'browser',
+        pid: 0,
+        cwd: function() { return '/'; },
+        chdir: function() {},
+        umask: function() { return 0; },
+        getuid: function() { return 0; },
+        getgid: function() { return 0; },
+        kill: function() {},
+        exit: function() {},
+        on: function() {},
+        addListener: function() {},
+        once: function() {},
+        emit: function() {},
+        removeListener: function() {},
+        removeAllListeners: function() {},
+        listeners: function() { return []; },
+        binding: function() { return {}; },
+        cwd: function() { return '/'; },
+        chdir: function() {},
+        umask: function() { return 0; },
+        getuid: function() { return 0; },
+        getgid: function() { return 0; },
+        kill: function() {},
+        exit: function() {},
+        on: function() {},
+        addListener: function() {},
+        once: function() {},
+        emit: function() {},
+        removeListener: function() {},
+        removeAllListeners: function() {},
+        listeners: function() { return []; },
+        binding: function() { return {}; }
+      };
+      
+      // Buffer polyfill
+      window.Buffer = window.Buffer || [];
+      
+      // Timing polyfills
+      window.setImmediate = window.setImmediate || function(fn) { return setTimeout(fn, 0); };
+      window.clearImmediate = window.clearImmediate || function(id) { clearTimeout(id); };
+      
+      // Additional polyfills for sockjs-client
+      if (!window.navigator) window.navigator = {};
+      window.navigator.product = 'ReactNative';
+      window.navigator.userAgent = window.navigator.userAgent || 'Mozilla/5.0';
+      
+      // Console polyfill (if needed)
+      if (!window.console) {
+        window.console = {
+          log: function() {},
+          warn: function() {},
+          error: function() {},
+          info: function() {},
+          debug: function() {}
+        };
+      }
+    }
+  </script>
+</head>
+<body>
+  <app-root></app-root>
+</body>
+</html>

@@ -1,0 +1,16 @@
+server:
+  port: 8761
+
+spring:
+  application:
+    name: discovery-service
+
+# Eureka Server Ayarlar?
+eureka:
+  client:
+    # Eureka Server bir client olmad??? için kendisini kaydetmeye çal??mas?n.
+    register-with-eureka: false
+    # Di?er servislerin listesini çekmesine gerek yok, çünkü listeyi o tutuyor.
+    fetch-registry: false
+
+
