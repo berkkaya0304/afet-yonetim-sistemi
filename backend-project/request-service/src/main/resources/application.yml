@@ -3,13 +3,13 @@ spring:
     name: request-service
 
   rabbitmq:
-    host: localhost
+    host: rabbitmq
     port: 5672
     username: guest
     password: guest
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/disastermanagement
+    url: jdbc:postgresql://Postgres:5432/disastermanagement
     username: root
     password: root
 
@@ -17,6 +17,11 @@ spring:
     hibernate:
       ddl-auto: update
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.xml
+    contexts: dev
 
 server:
   port: 8082
@@ -31,5 +36,5 @@ app:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://discovery-service:8761/eureka
 

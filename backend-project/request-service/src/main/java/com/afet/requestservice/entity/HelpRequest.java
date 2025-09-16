@@ -1,5 +1,8 @@
 package com.afet.requestservice.entity;
 
+import com.afet.requestservice.dto.Enum.RequestStatus;
+import com.afet.requestservice.dto.Enum.RequestType;
+import com.afet.requestservice.dto.Enum.Urgency;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,7 +26,6 @@ public class HelpRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    // Bu servis User entity'sini bilmez. Sadece ID'sini tutar.
     @Column(nullable = false)
     private Integer requesterId;
 

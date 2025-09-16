@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Samsung Saat Harita</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>📍 Harita</h1>
+            <div class="location-info">
+                <span id="current-location">Konum alınıyor...</span>
+            </div>
+        </header>
+        
+        <div id="map" class="map-container"></div>
+        
+        <div class="controls">
+            <button id="locate-btn" class="btn primary">📍 Konumumu Bul</button>
+            <button id="add-marker-btn" class="btn secondary">➕ Nokta Ekle</button>
+        </div>
+        
+        <div class="markers-list">
+            <h3>Kayıtlı Noktalar</h3>
+            <div id="markers-container"></div>
+        </div>
+    </div>
+    
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

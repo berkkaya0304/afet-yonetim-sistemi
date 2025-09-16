@@ -1,7 +1,7 @@
 package com.afet.requestservice.repository;
 
 import com.afet.requestservice.entity.HelpRequest;
-import com.afet.requestservice.entity.RequestStatus;
+import com.afet.requestservice.dto.Enum.RequestStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

@@ -31,13 +31,12 @@ public class HelpRequestController {
 
     @GetMapping("/my")
     public ResponseEntity<List<HelpRequestDto>> getMyRequests(
-            @RequestHeader("X-User-Id") Integer userId) { // Giriş yapmış kullanıcının ID'si
+            @RequestHeader("X-User-Id") Integer userId) {
         return ResponseEntity.ok(service.getRequestsForUser(userId));
     }
 
     @GetMapping
     public ResponseEntity<List<HelpRequestDto>> getAllRequests() {
-        // TODO: Buraya rol kontrolü eklenebilir. (Örn: @RequestHeader("X-User-Roles"))
         return ResponseEntity.ok(service.getAllRequests());
     }
 

@@ -5,8 +5,23 @@ spring:
   application:
     name: notification-service
 
+  datasource:
+    url: jdbc:postgresql://Postgres:5432/disastermanagement
+    username: root
+    password: root
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  liquibase:
+    enabled: false
+    change-log: classpath:db/changelog/db.changelog-master.xml
+    contexts: dev
+
   rabbitmq:
-    host: localhost
+    host: rabbitmq
     port: 5672
     username: guest
     password: guest
@@ -22,4 +37,4 @@ app:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://discovery-service:8761/eureka

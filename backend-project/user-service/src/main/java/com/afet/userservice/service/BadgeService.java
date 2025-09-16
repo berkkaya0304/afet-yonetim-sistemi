@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -38,10 +40,18 @@ public class BadgeService {
 
     @Transactional
     public void awardBadgeManually(Integer userId, Integer badgeId) {
+        // Null kontrolü ekle
+        if (userId == null) {
+            throw new IllegalArgumentException("User ID cannot be null");
+        }
+        if (badgeId == null) {
+            throw new IllegalArgumentException("Badge ID cannot be null");
+        }
+        
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
         Badge badge = badgeRepository.findById(badgeId)
-                .orElseThrow(() -> new RuntimeException("Badge not found"));
+                .orElseThrow(() -> new RuntimeException("Badge not found with id: " + badgeId));
 
         if (!userBadgeRepository.existsByUserAndBadge(user, badge)) {
             UserBadge newUserBadge = UserBadge.builder().user(user).badge(badge).build();
@@ -66,5 +76,27 @@ public class BadgeService {
                 }
             });
         }
+    }
+
+    public List<Badge> getAllBadges() {
+        return badgeRepository.findAll();
+    }
+
+    public Badge createBadge(Badge badge) {
+        return badgeRepository.save(badge);
+    }
+
+    public void deleteBadge(Integer badgeId) {
+        Badge badge = badgeRepository.findById(badgeId)
+                .orElseThrow(() -> new RuntimeException("Badge not found with id: " + badgeId));
+        
+        // Önce bu badge'e sahip kullanıcıları kontrol et
+        List<UserBadge> userBadges = userBadgeRepository.findByBadge(badge);
+        if (!userBadges.isEmpty()) {
+            throw new RuntimeException("Cannot delete badge. " + userBadges.size() + " users have this badge.");
+        }
+        
+        badgeRepository.delete(badge);
+        log.info("Deleted badge with id: {}", badgeId);
     }
 }

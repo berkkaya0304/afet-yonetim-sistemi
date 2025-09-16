@@ -4,9 +4,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
-/**
- * Yeni bir duyuru oluşturmak için API endpoint'ine gönderilecek verileri içeren DTO.
- */
 @Data
 public class CreateAnnouncementDto {
 

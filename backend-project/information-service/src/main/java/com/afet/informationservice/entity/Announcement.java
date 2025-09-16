@@ -25,8 +25,7 @@ public class Announcement {
     private Integer id;
 
     @Column(nullable = false)
-    private Integer adminId; // Duyuruyu oluşturan yöneticinin ID'si.
-    // Not: Bu servis User entity'sini bilmez, sadece ID'sini tutar.
+    private Integer adminId;
 
     @Column(nullable = false, length = 255)
     private String title;

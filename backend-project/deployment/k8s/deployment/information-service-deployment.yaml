@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: information-service
+  namespace: microservices-namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: information-service
+  template:
+    metadata:
+      labels:
+        app: information-service
+    spec:
+      containers:
+        - name: information-service
+          image: information-service:latest
+          ports:
+            - containerPort: 8083
+          env:
+            - name: EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE
+              value: "http://discovery-service:8761/eureka/"

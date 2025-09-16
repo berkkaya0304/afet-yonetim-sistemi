@@ -8,10 +8,8 @@ import com.afet.informationservice.repository.AnnouncementRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.swing.*;
-
 @Service
-@RequiredArgsConstructor // Constructor injection için Lombok anotasyonu
+@RequiredArgsConstructor
 public class AnnouncementService {
 
     private final AnnouncementRepository announcementRepository;

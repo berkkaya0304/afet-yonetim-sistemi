@@ -1,0 +1,24 @@
+# Assignment Service
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: assignment-service
+  namespace: microservices-namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: assignment-service
+  template:
+    metadata:
+      labels:
+        app: assignment-service
+    spec:
+      containers:
+        - name: assignment-service
+          image: assignment-service:latest
+          ports:
+            - containerPort: 8082
+          env:
+            - name: EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE
+              value: "http://discovery-service:8761/eureka/"

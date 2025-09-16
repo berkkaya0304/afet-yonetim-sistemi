@@ -4,7 +4,7 @@ import com.afet.requestservice.dto.CreateHelpRequestDto;
 import com.afet.requestservice.dto.HelpRequestDto;
 import com.afet.requestservice.dto.MapUpdateEvent;
 import com.afet.requestservice.entity.HelpRequest;
-import com.afet.requestservice.entity.RequestStatus;
+import com.afet.requestservice.dto.Enum.RequestStatus;
 import com.afet.requestservice.producer.MapUpdateProducer;
 import com.afet.requestservice.repository.HelpRequestRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,6 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.PrecisionModel;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -88,14 +87,16 @@ public class HelpRequestService {
         request.setStatus(RequestStatus.valueOf(newStatus.toUpperCase()));
         HelpRequest updatedRequest = repository.save(request);
 
-        MapUpdateEvent event = new MapUpdateEvent(
-                MapUpdateEvent.EventType.UPDATED,
-                "HELP_REQUEST",
-                mapToDto(updatedRequest) // Güncellenmiş DTO'yu payload olarak gönder
-        );
+        MapUpdateEvent event = new MapUpdateEvent();
+        event.setEventType(MapUpdateEvent.EventType.UPDATED);
+        event.setEntityType("HELP_REQUEST");
+        event.setPayload(mapToDto(updatedRequest)); // Güncellenmiş DTO'yu payload olarak gönder
         mapUpdateProducer.sendMapUpdateEvent(event);
     }
 
+    public Long getTotalHelpRequestsCount() {
+        return repository.count();
+    }
 
 
 }

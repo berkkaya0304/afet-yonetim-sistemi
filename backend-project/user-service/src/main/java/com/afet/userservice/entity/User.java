@@ -1,5 +1,6 @@
 package com.afet.userservice.entity;
 
+import com.afet.userservice.dto.Enum.Role;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Builder;
@@ -17,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "users") // Veritabanı tablosunun adı
+@Table(name = "users")
 public class User implements UserDetails {
 
     @Id
@@ -27,26 +28,76 @@ public class User implements UserDetails {
 
     @Column(unique = true)
     private String email;
-    private String password; // Bu, hash'lenmiş şifre olacak
+    private String password;
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
     @Builder.Default
-    private Integer completedTasksCount = 0; // Yeni alan
-
-    // UserDetails metodları (Spring Security için gerekli)
+    private Integer completedTasksCount = 0;
+    
+    public Integer getCompletedTasksCount() {
+        return completedTasksCount;
+    }
+    
+    public void setCompletedTasksCount(Integer completedTasksCount) {
+        this.completedTasksCount = completedTasksCount;
+    }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
     }
 
     @Override
     public String getUsername() {
-        return email; // Kullanıcı adı olarak email kullanıyoruz
+        return email;
     }
 
-    // Diğer UserDetails metodları (şimdilik true dönebiliriz)
+    @Override
+    public String getPassword() {
+        return password;
+    }
+    
+    public Integer getUserId() {
+        return id;
+    }
+    
+    public Integer getId() {
+        return id;
+    }
+    
+    public void setId(Integer id) {
+        this.id = id;
+    }
+    
+    public String getFullName() {
+        return fullName;
+    }
+    
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+    
+    public String getEmail() {
+        return email;
+    }
+    
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
+    public Role getRole() {
+        return role;
+    }
+    
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     @Override public boolean isAccountNonExpired() { return true; }
     @Override public boolean isAccountNonLocked() { return true; }
     @Override public boolean isCredentialsNonExpired() { return true; }

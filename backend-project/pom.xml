@@ -20,6 +20,10 @@
         <module>websocket-service</module>
     </modules>
 
+    <properties>
+        <liquibase.version>4.26.0</liquibase.version>
+    </properties>
+
     <dependencyManagement>
         <dependencies>
             <!-- Spring Cloud Dependencies -->
@@ -30,8 +34,16 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            
+            <!-- Liquibase Dependencies -->
+            <dependency>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-core</artifactId>
+                <version>${liquibase.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
+    
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>

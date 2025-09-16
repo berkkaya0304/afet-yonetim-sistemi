@@ -1,0 +1,226 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: #333;
+}
+
+.container {
+    max-width: 100%;
+    padding: 10px;
+    margin: 0 auto;
+}
+
+.header {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 15px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+    font-size: 1.5rem;
+    color: #4a5568;
+    margin-bottom: 8px;
+}
+
+.location-info {
+    font-size: 0.9rem;
+    color: #718096;
+}
+
+.map-container {
+    height: 300px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    margin-bottom: 15px;
+}
+
+.controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    flex: 1;
+    min-width: 120px;
+    padding: 12px 16px;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn.primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.btn.secondary {
+    background: rgba(255, 255, 255, 0.9);
+    color: #4a5568;
+    border: 2px solid #e2e8f0;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.markers-list {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.markers-list h3 {
+    font-size: 1.1rem;
+    color: #4a5568;
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+.marker-item {
+    background: #f7fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.marker-info {
+    flex: 1;
+}
+
+.marker-name {
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 4px;
+}
+
+.marker-coords {
+    font-size: 0.8rem;
+    color: #718096;
+}
+
+.delete-marker {
+    background: #e53e3e;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.delete-marker:hover {
+    background: #c53030;
+}
+
+/* Leaflet harita özelleştirmeleri */
+.leaflet-container {
+    font-family: inherit;
+}
+
+.leaflet-popup-content-wrapper {
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.leaflet-popup-content {
+    margin: 12px 16px;
+    font-size: 0.9rem;
+}
+
+.leaflet-popup-tip {
+    background: white;
+}
+
+/* Responsive tasarım */
+@media (max-width: 480px) {
+    .container {
+        padding: 8px;
+    }
+    
+    .header {
+        padding: 12px;
+    }
+    
+    .header h1 {
+        font-size: 1.3rem;
+    }
+    
+    .map-container {
+        height: 250px;
+    }
+    
+    .btn {
+        min-width: 100px;
+        padding: 10px 12px;
+        font-size: 0.85rem;
+    }
+    
+    .controls {
+        flex-direction: column;
+    }
+}
+
+/* Samsung saat için özel stiller */
+@media (max-width: 360px) {
+    .container {
+        padding: 5px;
+    }
+    
+    .header {
+        padding: 10px;
+        border-radius: 12px;
+    }
+    
+    .header h1 {
+        font-size: 1.2rem;
+    }
+    
+    .map-container {
+        height: 200px;
+        border-radius: 12px;
+    }
+    
+    .btn {
+        padding: 8px 10px;
+        font-size: 0.8rem;
+        border-radius: 8px;
+    }
+    
+    .markers-list {
+        padding: 12px;
+        border-radius: 12px;
+    }
+}

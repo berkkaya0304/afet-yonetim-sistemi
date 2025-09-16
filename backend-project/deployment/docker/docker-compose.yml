@@ -1,0 +1,176 @@
+services:
+  # Infrastructure Services
+
+  # Discovery Service (Eureka Server)
+  discovery-service:
+    build: ../../discovery-service
+    container_name: discovery-service
+    ports:
+      - "8761:8761"
+    networks:
+      - microservices-network
+    external_links:
+      - Postgres:Postgres
+      - rabbitmq:rabbitmq
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8761/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # User Service
+  user-service:
+    build: ../../user-service
+    container_name: user-service
+    ports:
+      - "8081:8081"
+    environment:
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://discovery-service:8761/eureka
+    depends_on:
+      - discovery-service
+    networks:
+      - microservices-network
+    external_links:
+      - Postgres:Postgres
+      - rabbitmq:rabbitmq
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Assignment Service
+  assignment-service:
+    build: ../../assignment-service
+    container_name: assignment-service
+    ports:
+      - "8083:8083"
+    environment:
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://discovery-service:8761/eureka
+    depends_on:
+      - discovery-service
+    networks:
+      - microservices-network
+    external_links:
+      - Postgres:Postgres
+      - rabbitmq:rabbitmq
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8083/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Information Service
+  information-service:
+    build: ../../information-service
+    container_name: information-service
+    ports:
+      - "8084:8084"
+    environment:
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://discovery-service:8761/eureka
+    depends_on:
+      - discovery-service
+    networks:
+      - microservices-network
+    external_links:
+      - Postgres:Postgres
+      - rabbitmq:rabbitmq
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8084/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Notification Service
+  notification-service:
+    build: ../../notification-service
+    container_name: notification-service
+    ports:
+      - "8085:8085"
+    environment:
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://discovery-service:8761/eureka
+    depends_on:
+      - discovery-service
+    networks:
+      - microservices-network
+    external_links:
+      - Postgres:Postgres
+      - rabbitmq:rabbitmq
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8085/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Request Service
+  request-service:
+    build: ../../request-service
+    container_name: request-service
+    ports:
+      - "8082:8082"
+    environment:
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://discovery-service:8761/eureka
+    depends_on:
+      - discovery-service
+    networks:
+      - microservices-network
+    external_links:
+      - Postgres:Postgres
+      - rabbitmq:rabbitmq
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8082/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # WebSocket Service
+  websocket-service:
+    build: ../../websocket-service
+    container_name: websocket-service
+    ports:
+      - "8086:8086"
+    environment:
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://discovery-service:8761/eureka
+    depends_on:
+      - discovery-service
+    networks:
+      - microservices-network
+    external_links:
+      - Postgres:Postgres
+      - rabbitmq:rabbitmq
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8086/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # API Gateway Service
+  api-gateway-service:
+    build: ../../api-gateway-service
+    container_name: api-gateway-service
+    ports:
+      - "8080:8080"
+    environment:
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://discovery-service:8761/eureka
+    depends_on:
+      - discovery-service
+      - user-service
+      - assignment-service
+      - information-service
+      - notification-service
+      - request-service
+      - websocket-service
+    networks:
+      - microservices-network
+    external_links:
+      - Postgres:Postgres
+      - rabbitmq:rabbitmq
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+networks:
+  microservices-network:
+    driver: bridge

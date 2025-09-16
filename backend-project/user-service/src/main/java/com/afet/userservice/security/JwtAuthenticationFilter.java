@@ -35,20 +35,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String userEmail;
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            filterChain.doFilter(request, response); // Token yoksa sonraki filtreye geç
+            filterChain.doFilter(request, response);
             return;
         }
 
-        jwt = authHeader.substring(7); // "Bearer " kısmını at
+        jwt = authHeader.substring(7);
         userEmail = jwtService.extractUsername(jwt);
 
-        // Kullanıcı email'i varsa ve henüz authenticate olmamışsa
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
 
-            // Token geçerli mi diye kontrol et
             if (jwtService.isTokenValid(jwt, userDetails)) {
-                // Spring Security Context'ini güncelle
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
                         null,

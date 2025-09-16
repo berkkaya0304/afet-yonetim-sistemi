@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MapUpdateEvent {
     private EventType eventType; // CREATED, UPDATED, DELETED
-    private String entityType;    // HELP_REQUEST, SAFE_ZONE etc.
-    private Object payload;       // Güncellenen nesnenin kendisi (örn: HelpRequestDto)
+    private String entityType;    // HELP_REQUEST, SAFE_ZONE
+    private Object payload;
 
     public enum EventType {
         CREATED, UPDATED, DELETED

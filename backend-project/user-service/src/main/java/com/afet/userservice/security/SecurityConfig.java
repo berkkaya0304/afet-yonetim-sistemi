@@ -6,12 +6,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
@@ -19,16 +22,21 @@ public class SecurityConfig {
     private final AuthenticationProvider authenticationProvider;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, CorsConfigurationSource corsConfigurationSource) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // CSRF'i devre dışı bırak (stateless API için yaygın)
+                .cors(cors -> cors.configurationSource(corsConfigurationSource))
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/auth/**","/swagger-ui.html","/swagger-ui/**","/v3/api-docs/**").permitAll() // /auth/** endpoint'lerine izin ver
-                        .anyRequest().authenticated() // Diğer tüm istekler kimlik doğrulaması gerektirir
+                        .requestMatchers("/api/v1/auth/login", "/api/v1/auth/register", "/api/v1/auth/debug/**").permitAll()
+                        .requestMatchers("/api/v1/admin/**").hasRole("YONETICI")
+                        .requestMatchers("/api/v1/users/me/**").authenticated()
+                        .requestMatchers("/api/v1/users/{id}").authenticated()
+                        .requestMatchers("/api/v1/users/**").authenticated()
+                        .anyRequest().authenticated()
                 )
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Session kullanma
-                .authenticationProvider(authenticationProvider) // Kendi auth provider'ımızı tanıt
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class); // Filtremizi ekle
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authenticationProvider(authenticationProvider)
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

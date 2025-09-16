@@ -46,6 +46,14 @@ public class JwtService {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
         extraClaims.put("roles", roles);
+        
+        if (userDetails instanceof com.afet.userservice.entity.User) {
+            com.afet.userservice.entity.User user = (com.afet.userservice.entity.User) userDetails;
+            Integer userId = user.getUserId();
+            if (userId != null) {
+                extraClaims.put("userId", userId);
+            }
+        }
 
         return Jwts.builder()
                 .setClaims(extraClaims)
@@ -56,23 +64,19 @@ public class JwtService {
                 .compact();
     }
 
-    // Token'ın geçerliliğini kontrol eder
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
 
-    // Token'ın süresinin dolup dolmadığını kontrol eder
     private boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
 
-    // Token'dan son geçerlilik tarihini çıkarır
     private Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
 
-    // Token'daki tüm "claim"leri çözer
     private Claims extractAllClaims(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(getSignInKey())
@@ -81,7 +85,6 @@ public class JwtService {
                 .getBody();
     }
 
-    // application.properties'den okunan gizli anahtarı imzalamak için hazır hale getirir
     private Key getSignInKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);

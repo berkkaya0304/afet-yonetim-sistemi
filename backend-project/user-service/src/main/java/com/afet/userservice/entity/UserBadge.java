@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 @Entity
-@NoArgsConstructor   // JPA için gerekli
-@AllArgsConstructor  // Builder için gerekli
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "user_badges")
 public class UserBadge {
     @Id

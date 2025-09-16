@@ -29,11 +29,9 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
     @Override
     public GatewayFilter apply(Config config) {
         return ((exchange, chain) -> {
-            // Eğer istek, kimlik doğrulaması gerektirmeyen (public) bir URL'e ise, direkt devam et
             if (validator.isSecured.test(exchange.getRequest())) {
-                // Request header'ında token var mı diye kontrol et
                 if (!exchange.getRequest().getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
-                    return onError(exchange, HttpStatus.UNAUTHORIZED);
+                    return onError(exchange, HttpStatus.UNAUTHORIZED, "Authorization header is missing");
                 }
 
                 String authHeader = exchange.getRequest().getHeaders().get(HttpHeaders.AUTHORIZATION).get(0);
@@ -42,39 +40,38 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                 }
 
                 try {
-                    // Token'ı doğrula
                     if (jwtUtil.isInvalid(authHeader)) {
-                        return onError(exchange, HttpStatus.UNAUTHORIZED);
+                        return onError(exchange, HttpStatus.UNAUTHORIZED, "Invalid or expired token");
                     }
 
-                    // Token'dan claim'leri (kullanıcı id, rol vb.) çıkar
                     var claims = jwtUtil.getAllClaimsFromToken(authHeader);
 
-                    // YENİ: Admin Rol Kontrolü
                     if (validator.isAdminRoute.test(exchange.getRequest())) {
                         List<String> roles = (List<String>) claims.get("roles");
-                        if (roles == null || !roles.contains("YONETICI")) {
-                            return onError(exchange, HttpStatus.FORBIDDEN); // Yetkin yok!
+                        if (roles == null || !roles.contains("ROLE_YONETICI")) {
+                            return onError(exchange, HttpStatus.FORBIDDEN, "Admin role required for this endpoint");
                         }
                     }
+                    
 
-                    // İsteği downstream servise göndermeden önce header'ları modifiye et
                     exchange.getRequest().mutate()
-                            .header("X-User-Id", claims.getSubject()) // 'sub' genelde user id/email içerir
-                            // .header("X-User-Roles", claims.get("roles").toString()) // JWT'ye rol eklediyseniz
+                            .header("X-User-Id", claims.get("userId") != null ? claims.get("userId").toString() : claims.getSubject())
+                            .header("X-User-Roles", claims.get("roles") != null ? claims.get("roles").toString() : "")
                             .build();
 
                 } catch (Exception e) {
-                    return onError(exchange, HttpStatus.UNAUTHORIZED);
+                    return onError(exchange, HttpStatus.UNAUTHORIZED, "Token validation failed: " + e.getMessage());
                 }
             }
             return chain.filter(exchange);
         });
     }
 
-    private Mono<Void> onError(ServerWebExchange exchange, HttpStatus httpStatus) {
+    private Mono<Void> onError(ServerWebExchange exchange, HttpStatus httpStatus, String message) {
         exchange.getResponse().setStatusCode(httpStatus);
-        return exchange.getResponse().setComplete();
+        exchange.getResponse().getHeaders().add("Content-Type", "application/json");
+        String errorBody = "{\"error\":\"" + httpStatus.getReasonPhrase() + "\",\"message\":\"" + message + "\"}";
+        return exchange.getResponse().writeWith(Mono.just(exchange.getResponse().bufferFactory().wrap(errorBody.getBytes())));
     }
 
     public static class Config {
